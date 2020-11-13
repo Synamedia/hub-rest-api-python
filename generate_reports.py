@@ -19,7 +19,7 @@ const_project_roles = [ "Project Code Scanner", "BOM Manager", "Project Viewer",
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
-    description='Generates and downloads reports for project(s) on blackduck.com',
+    description="DEPRECATED. Use generate_reports.py from the internal GitHub server in OSCP/scripts.\n\nGenerates and downloads reports for project(s) on blackduck.com",
     epilog='''\
 Note: When using the --project_file option the file format per line MUST be:
 
@@ -28,6 +28,8 @@ project name[;version][;filename]
 
 # The default version is master but can be overridden with --version
 # The default filenema is the project-version name with .zip e.g. "my proj-master.zip"
+
+DEPRECATED. Use generate_reports.py from the internal GitHub server in OSCP/scripts
 '''
 )
 
@@ -372,6 +374,7 @@ class ProjectVersion:
 
 # ------------------------------------------------------------------------------  
 # Main code
+print("DEPRECATED. Use generate_reports.py from the internal GitHub server in OSCP/scripts.")
 
 if args.project_name:
     print('Generating report...')
@@ -520,3 +523,6 @@ else:
 
     for pv in all_pv:
         pv.clean_up()
+
+
+print("DEPRECATED. Use generate_reports.py from the internal GitHub server in OSCP/scripts.")
