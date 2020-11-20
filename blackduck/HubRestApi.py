@@ -436,7 +436,8 @@ class HubInstance(object):
     def _get_policy_url(self):
         return self.config['baseurl'] + "/api/policy-rules"
 
-    def get_policies(self, parameters={}):
+    # By default get the first 100 enabled policy rules
+    def get_policies(self, parameters={"filter":"policyRuleEnabled:true", "limit":100}):
         url = self._get_policy_url() + self._get_parameter_string(parameters)
         headers = {'Accept': 'application/json'}
         response = self.execute_get(url, custom_headers=headers)
@@ -882,6 +883,20 @@ class HubInstance(object):
             'limit': limit,
             'offset': offset})
         custom_headers = {'Content-Type': 'application/vnd.blackducksoftware.scan-4+json'}
+        response = self.execute_get(url, custom_headers=custom_headers)
+        jsondata = response.json()
+        return jsondata
+        
+    def get_version_policyrules(self, version, limit=100, offset=0):
+        # The API doesn't actually put the policy-rules url in the links but policy-status is close enough
+        url = self.get_link(version, "policy-status") + self._get_parameter_string({
+            'limit': limit,
+            'offset': offset})
+        # Hack the url to get the policy-rules instead
+        url = url.replace('policy-status', 'policy-rules')
+        
+        # Must specify this accept header or you get a 406 response
+        custom_headers = {'Accept':'application/vnd.blackducksoftware.internal-1+json'}
         response = self.execute_get(url, custom_headers=custom_headers)
         jsondata = response.json()
         return jsondata
