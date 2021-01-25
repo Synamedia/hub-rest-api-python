@@ -12,7 +12,7 @@ pip3 install .
 ### Configure your connection
 Create a token in BlackDuck for your user or generic account
 
-`cp restconfig.json.api_token.example restconfig.json`
+`cp restconfig.json.api_token.example .restconfig.json`
 
 Update restconfig.json with your credentials
 
